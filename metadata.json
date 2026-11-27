@@ -1,0 +1,6 @@
+{
+  "name": "STAYON",
+  "description": "Your Hostel. One Smart Space. Smart hostel management portal for notices, issue reporting, tracking, and warden operations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

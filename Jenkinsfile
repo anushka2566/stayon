@@ -37,7 +37,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 // Build the Docker image using the project Dockerfile
-                bat 'docker build -t %IMAGE_NAME%:latest .'
+                bat '"C:\\Users\\slim5\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" build -t %IMAGE_NAME%:latest .'
             }
         }
 
@@ -45,10 +45,10 @@ pipeline {
             steps {
                 // Stop and remove any old container, then launch STAYON with persistent H2 storage
                 bat """
-                    docker stop %CONTAINER_NAME% 2>nul
-                    docker rm %CONTAINER_NAME% 2>nul
-                    docker volume create %VOLUME_NAME%
-                    docker run -d ^
+                    "C:\\Users\\slim5\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" stop %CONTAINER_NAME% 2>nul
+                    "C:\\Users\\slim5\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" rm %CONTAINER_NAME% 2>nul
+                    "C:\\Users\\slim5\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" volume create %VOLUME_NAME%
+                    "C:\\Users\\slim5\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" run -d ^
                         --name %CONTAINER_NAME% ^
                         -p 8080:8080 ^
                         -v %VOLUME_NAME%:/app/data ^

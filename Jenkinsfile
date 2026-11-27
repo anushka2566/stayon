@@ -23,37 +23,37 @@ pipeline {
         stage('Maven Build') {
             steps {
                 // Compile the Java 21 project and package the Spring Boot JAR
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
                 // Run JUnit and Spring Boot integration tests
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
 
         stage('Docker Build') {
             steps {
                 // Build the Docker image using the project Dockerfile
-                sh "docker build -t ${IMAGE_NAME}:latest ."
+                bat 'docker build -t %IMAGE_NAME%:latest .'
             }
         }
 
         stage('Docker Run') {
             steps {
                 // Stop and remove any old container, then launch STAYON with persistent H2 storage
-                sh """
-                    docker stop ${CONTAINER_NAME} || true
-                    docker rm ${CONTAINER_NAME} || true
-                    docker volume create ${VOLUME_NAME}
-                    docker run -d \\
-                        --name ${CONTAINER_NAME} \\
-                        -p 8080:8080 \\
-                        -v ${VOLUME_NAME}:/app/data \\
-                        --restart unless-stopped \\
-                        ${IMAGE_NAME}:latest
+                bat """
+                    docker stop %CONTAINER_NAME% 2>nul
+                    docker rm %CONTAINER_NAME% 2>nul
+                    docker volume create %VOLUME_NAME%
+                    docker run -d ^
+                        --name %CONTAINER_NAME% ^
+                        -p 8080:8080 ^
+                        -v %VOLUME_NAME%:/app/data ^
+                        --restart unless-stopped ^
+                        %IMAGE_NAME%:latest
                 """
             }
         }
